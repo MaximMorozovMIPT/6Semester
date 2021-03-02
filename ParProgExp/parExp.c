@@ -67,8 +67,6 @@ int main(int argc, char **argv)
             fact *= i;
         }
 
-
-        //printf("I am in process number %d \n", my_id);
         ierr = MPI_Send( &partial_e, 1, MPI_DOUBLE, root_process,
            return_data_tag, MPI_COMM_WORLD);
     }
