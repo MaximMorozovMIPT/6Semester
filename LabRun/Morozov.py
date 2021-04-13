@@ -7,7 +7,7 @@ k = lambda x: 1 + np.cos(x) ** 2
 q = 1 
 f = lambda x: np.sin(x) ** 2
 
-def matrix(N, h):
+def Matrix(N, h):
     matrix = np.zeros((N, N))
     val = np.zeros(N)
     matrix[0][0] = -k(0) - h
@@ -45,7 +45,7 @@ def reverse_run(p, r):
 N = 11
 h = 0.1
 
-matrix, val = matrix(N, h)
+matrix, val = Matrix(N, h)
 
 p, r = run(matrix, val)
 solution = reverse_run(p, r)
@@ -54,8 +54,47 @@ x = []
 for i in range(11):
     x.append(i*h)
 
+N = 101
+h = 0.01
+
+matrix1, val1 = Matrix(N, h)
+
+p1, r1 = run(matrix1, val1)
+solution1 = reverse_run(p1, r1)
+
+y = []
+for i in range(101):
+    y.append(i*h)
+
+N = 1001
+h = 0.001
+
+matrix2, val2 = Matrix(N, h)
+
+p2, r2 = run(matrix2, val2)
+solution2 = reverse_run(p2, r2)
+
+z = []
+for i in range(1001):
+    z.append(i*h)
+
+N = 10001
+h = 0.0001
+
+matrix3, val3 = Matrix(N, h)
+
+p3, r3 = run(matrix3, val3)
+solution3 = reverse_run(p3, r3)
+
+w = []
+for i in range(10001):
+    w.append(i*h)
+
 fig, ax = plt.subplots(figsize=(16, 9)) 
-ax.plot(x, solution, marker='x', markersize=4)
+ax.plot(x, solution, marker='x', markersize=4, label="11 dots")
+ax.plot(y, solution1, label="101 dots")
+ax.plot(z, solution2, label="1001 dots")
+ax.plot(w, solution3, label="10001 dots")
 ax.set_title('Solution')
 ax.set_xlabel('x')
 ax.set_ylabel('y')
@@ -63,4 +102,20 @@ ax.grid(True)
 ax.legend()
 fig.savefig(os.path.join("LabRun/solution.png"), dpi=100) 
 
+printable1 = []
+printable2 = []
+printable3 = []
+for i in range(101):
+    if(i % 10 == 0):
+        printable1.append(solution1[i])
+for i in range(1001):
+    if(i % 100 == 0):
+        printable2.append(solution2[i])
+for i in range(10001):
+    if(i % 1000 == 0):
+        printable3.append(solution3[i])
 
+print(solution)
+print(printable1)
+print(printable2)
+print(printable3)
