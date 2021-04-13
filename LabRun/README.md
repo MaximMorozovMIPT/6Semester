@@ -3,5 +3,5 @@
 
 Уравнения и граничные условия 
 
-![](Equasions.png)
+![](Equasion.png)
 
