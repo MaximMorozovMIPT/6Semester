@@ -6,7 +6,7 @@ void Graph::AddEdge(int v, int adj)
     adjacentVertices[adj].insert(v);
 }
 
-void Graph::GreedAlgorithm()
+std::vector<int> Graph::GreedAlgorithm()
 {
     // Vector of int where every number equal to color
     // -1 - not colored yet, 0 - first color, 1 - second, etc.
@@ -50,12 +50,18 @@ void Graph::GreedAlgorithm()
             }
         }
     }
+    return color;
+}
+void Graph::PrintColors(std::vector<int> color)
+{
     std::cout << "\nVertex   Color " << std::endl;
     // Print colors
     for (int u = 0; u < numOfVertices_; u++)
     {
         std::cout << u + 1 << "     |  " << color[u] << std::endl;
     }
+
+    std::cout << "\nNumber of used colors: " << *std::max_element(color.begin(), color.end()) << std::endl;
 }
 
 void Graph::PrintGraph()
@@ -74,10 +80,11 @@ void Graph::PrintGraph()
 Graph CreateGraph()
 {
     std::string graph;
-    std::getline(std::cin,graph);
+    std::ifstream file("input.txt");
+    std::getline(file, graph);
     std::vector<std::string> vertex;
     std::string::size_type pos_begin = 3, pos_end = 0;
-
+    
     // Define the number of vertices as a number of ";" simbols
     // and parse string to strings with adjacent vertices for specific vertex
     for (;;)
@@ -108,6 +115,30 @@ Graph CreateGraph()
 
             // Add read vertex, subtract one because of vector logic
             gf.AddEdge(i, adjVertex - 1);
+        }
+    }
+    return gf;
+}
+
+Graph CreateRandomGraph(int vertices)
+{
+    Graph gf(vertices);
+    for (int i = 0; i < vertices; ++i)
+    {
+        std::random_device dev;
+        std::mt19937 rng(dev());
+        std::uniform_int_distribution<std::mt19937::result_type> dist(0, vertices - 1); // distribution in range [0, vertices - 1]
+        // Number of POSSIBLE edges because newAdjVertex can repeat
+        int numOfPossibleEdges = dist(rng);
+        // For every possible edge generating second vertex (newAdjVertex)
+        for (int j = 0; j < numOfPossibleEdges; ++j)
+        {
+            int newAdjVertex = dist(rng);
+            // Check that current vertex not equal new vertex
+            if (newAdjVertex != i)
+            {
+                gf.AddEdge(i, newAdjVertex);
+            }
         }
     }
     return gf;

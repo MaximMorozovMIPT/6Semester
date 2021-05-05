@@ -3,6 +3,11 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <algorithm>
+#include <fstream>
+#include <random>
+#include <sys/time.h>
+#include <iomanip> 
 
 class Graph
 {
@@ -15,8 +20,9 @@ public:
     ~Graph() = default;
  
     void AddEdge(int v, int w);
-    void GreedAlgorithm();
+    std::vector<int> GreedAlgorithm();
     void PrintGraph();
+    void PrintColors(std::vector<int> color);
 
 private:
     int numOfVertices_;
@@ -24,3 +30,4 @@ private:
 };
 
 Graph CreateGraph();
+Graph CreateRandomGraph(int vertices);
